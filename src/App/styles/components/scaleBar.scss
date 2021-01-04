@@ -1,0 +1,19 @@
+.scale-bar__container {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 18px;
+    left: 5px;
+}
+
+.scale-bar__text {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.scale-bar__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px 2px;
+}

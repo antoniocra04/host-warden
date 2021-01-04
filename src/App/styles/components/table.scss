@@ -1,0 +1,46 @@
+@import '../colors.scss';
+
+.table__container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 53px;
+}
+
+.table__row {
+    width: 100%;
+    border: 1px black solid;
+    border-width: 1px 0px 1px 0px;
+    display: flex;
+    align-items: center;
+}
+
+.table__ip-text {
+    font-size: 15px;
+    color: $text;
+    margin: 5px 0px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 110px;
+    word-break: break-all;
+}
+
+.table__indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    margin: 0px 5px;
+}
+
+.table__stats-container {
+    display: flex;
+    position: absolute;
+    left: 141px;
+    width: calc(100% - 141px);
+}
+
+.table__stats-activity-block {
+    width: calc(100% / 8);
+    height: 14px;
+    display: flex;
+}

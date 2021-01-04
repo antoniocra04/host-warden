@@ -1,0 +1,16 @@
+.time-line__container {
+    display: flex;
+    width: calc(100% - 145px);
+    left: 140px;
+    position: absolute;
+    top: 5px;
+}
+
+.time-line__time-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 135px;
+    font-size: 15px;
+    font-weight: 500;
+}

@@ -1,0 +1,24 @@
+$left-margin: 135px;
+
+.mesh {
+    position: fixed;
+    display: flex;
+    left: $left-margin;
+    top: 0;
+    column-gap: calc((100% - #{$left-margin}) / 7);
+    width: calc(100% - #{$left-margin});
+}
+
+.mesh__bold {
+    position: relative;
+    height: 100vh;
+    width: 6px;
+    background-color: black;
+}
+
+.mesh__normal {
+    position: relative;
+    height: 100vh;
+    width: 1px;
+    background-color: black;
+}
