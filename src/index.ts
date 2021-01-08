@@ -29,7 +29,7 @@ const createWindow = (): void => {
     })
 
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
     mainWindow.removeMenu()
 
     mainWindow.on('minimize', (event: Electron.Event) => {
@@ -91,7 +91,6 @@ ipcMain.on('GET_ALL_HOSTS', (event) => {
 
 ipcMain.handle('REMOVE_ROW', (event, rowId) => {
     db.remove({ _id: rowId }, (err: string, numRemoved: number) => {
-        console.log(numRemoved)
         if (err) {
             console.log(err)
         }
