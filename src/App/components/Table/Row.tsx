@@ -20,8 +20,9 @@ export const Row: React.FC<IRow> = (props) => {
     const intervalRef = React.useRef(null)
 
     const ping = (host: string) => {
-        function process(error: string) {
-            if(!error){
+        function process(error: string, stdOut: string) {
+            console.log(stdOut.indexOf('Maximum'))
+            if(stdOut.indexOf('Maximum') !== -1){
                 setHostState('active')
                 ipcRenderer.invoke('ADD_STATS', props.id, 1)
                 setRowStats(ipcRenderer.sendSync('GET_STATS', props.id))  
