@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron'
 import React from 'react'
-const exec = require('child_process').exec;
+const exec = require('child_process').exec
 
 import { Indicator } from './Indicator'
 import { Stats } from './Stats'
@@ -21,18 +21,18 @@ export const Row: React.FC<IRow> = (props) => {
 
     const ping = (host: string) => {
         function process(error: string, stdOut: string) {
-            if(stdOut.indexOf('Maximum') !== -1){
+            if (stdOut.indexOf('TTL') !== -1) {
                 setHostState('active')
                 ipcRenderer.invoke('ADD_STATS', props.id, 1)
-                setRowStats(ipcRenderer.sendSync('GET_STATS', props.id))  
-            }else{
+                setRowStats(ipcRenderer.sendSync('GET_STATS', props.id))
+            } else {
                 setHostState('disabled')
                 ipcRenderer.invoke('ADD_STATS', props.id, 0)
                 setRowStats(ipcRenderer.sendSync('GET_STATS', props.id))
             }
         }
 
-        exec(`ping ${host}`, process);
+        exec(`ping -n 1 ${host}`, process)
     }
 
     const removeRow = () => {
