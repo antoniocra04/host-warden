@@ -21,7 +21,7 @@ export const Row: React.FC<IRow> = (props) => {
 
     const ping = (host: string) => {
         function process(error: string, stdOut: string) {
-            if(stdOut.indexOf('Maximum') !== -1){
+            if(stdOut.indexOf('TTL') !== -1){
                 setHostState('active')
                 ipcRenderer.invoke('ADD_STATS', props.id, 1)
                 setRowStats(ipcRenderer.sendSync('GET_STATS', props.id))  
@@ -32,7 +32,7 @@ export const Row: React.FC<IRow> = (props) => {
             }
         }
 
-        exec(`ping ${host}`, process);
+        exec(`ping -n 1 ${host}`, process);
     }
 
     const removeRow = () => {

@@ -1,10 +1,17 @@
-import { app, BrowserWindow, ipcMain, nativeImage } from 'electron'
+import { app, BrowserWindow, ipcMain, Menu, nativeImage} from 'electron'
 import { IHost } from './App/utils/Interfaces'
 import { createTray } from './App/utils/Functions'
+import {menuTemplate} from './menuTemplate'
+import os from 'os'
+import {addNewHost} from './functions'
+
+// Get current ip adress
+const networkInterfaces = os.networkInterfaces(); 
+export const LOCAL_IP = networkInterfaces['Wi-Fi'][1].address
 
 // Create db connection
-const Datastore = require('nedb'),
-    db = new Datastore({ filename: 'data.db', autoload: true })
+const Datastore = require('nedb')
+export const db = new Datastore({ filename: 'data.db', autoload: true })
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any
 
@@ -16,8 +23,10 @@ if (require('electron-squirrel-startup')) {
 
 let tray: any = null
 
+export let mainWindow: BrowserWindow = null
+
 const createWindow = (): void => {
-    const mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         height: 720,
         width: 1080,
         resizable: false,
@@ -27,10 +36,10 @@ const createWindow = (): void => {
             nodeIntegration: true,
         },
     })
-
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
     // mainWindow.webContents.openDevTools();
-    mainWindow.removeMenu()
+    const menu = Menu.buildFromTemplate(menuTemplate)
+    Menu.setApplicationMenu(menu)
 
     mainWindow.on('minimize', (event: Electron.Event) => {
         event.preventDefault()
@@ -46,6 +55,7 @@ const createWindow = (): void => {
         mainWindow.show()
         tray.destroy()
     })
+
 }
 
 app.on('ready', createWindow)
@@ -64,19 +74,8 @@ app.on('activate', () => {
 
 // DB ipcMain calls
 
-ipcMain.handle('CREATE_NEW_HOST', (event, newHost: 'string') => {
-    db.findOne({ ip: newHost }, (err: string, host: object) => {
-        if (!host) {
-            db.insert(
-                { ip: newHost, stats: [] },
-                (err: string, newDoc: any) => {
-                    if (err) {
-                        console.log(err)
-                    }
-                }
-            )
-        }
-    })
+ipcMain.handle('CREATE_NEW_HOST', (event, newHost: string) => {
+    addNewHost(db, newHost)
 })
 
 ipcMain.on('GET_ALL_HOSTS', (event) => {

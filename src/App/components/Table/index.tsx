@@ -15,6 +15,12 @@ const Table: React.FC<ITable> = (props) => {
         ipcRenderer.on('GET_ALL_HOSTS-reply', (event, args) => {
             setRows(args)
         })
+        ipcRenderer.on('FORCE_UPDATE_HOST_LIST', (event) => {
+            ipcRenderer.send('GET_ALL_HOSTS')
+            setTimeout(() => {
+                ipcRenderer.send('GET_ALL_HOSTS')
+            }, 100)
+        })
         ipcRenderer.send('GET_ALL_HOSTS')
     }, [])
 
