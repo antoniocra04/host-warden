@@ -95,6 +95,7 @@ ipcMain.handle('REMOVE_ROW', (event, rowId) => {
             console.log(err)
         }
     })
+    db.persistence.compactDatafile()
 })
 
 ipcMain.handle('ADD_STATS', (event, _id: string, activity: number) => {
@@ -108,6 +109,7 @@ ipcMain.handle('ADD_STATS', (event, _id: string, activity: number) => {
             }
         }
     )
+    db.persistence.compactDatafile()
 })
 
 ipcMain.on('GET_STATS', (event, rowId) => {
